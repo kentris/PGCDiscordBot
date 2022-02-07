@@ -58,14 +58,18 @@ async def on_message(message):
         if '!lol' in message.content:
             # Get the user_input for the champ
             champ_input = process_lol_message(message.content)
-            # Find the best match for the user input
-            champ = match_lol_champ(champ_input)
-            # Grab the corresponding champs' urls
-            build_url = champions[champ]['build_url']
-            info_url = champions[champ]['move_url']
-            # Push to discord channel
-            await message.channel.send(f"How to play {champ}: {info_url}")
-            await message.channel.send(f"How to build {champ}: {build_url}")
+            # Make sure there is a champ to process
+            if len(champ_input) == 0:
+                await message.channel.send("No champ name was provided...")
+            else:
+                # Find the best match for the user input
+                champ = match_lol_champ(champ_input)
+                # Grab the corresponding champs' urls
+                build_url = champions[champ]['build_url']
+                info_url = champions[champ]['move_url']
+                # Push to discord channel
+                await message.channel.send(f"How to play {champ}: {info_url}")
+                await message.channel.send(f"How to build {champ}: {build_url}")
 
 
 client.run(TOKEN)
