@@ -36,12 +36,8 @@ async def on_message(message):
         if '!lol' in message.content:
             # If there is any issue, msg2 will be blank
             msg1, msg2 = lol.process(client, message)
-
-            if msg2:
-                await message.channel.send(msg1)
-            else:
-                await message.channel.send(msg1)
-                await message.channel.send(msg2)
+            await message.channel.send(msg1)
+            await message.channel.send(msg2)
         elif '!joke' in message.content:
             msg1, msg2 = joke.process(message)
             # print out joke
