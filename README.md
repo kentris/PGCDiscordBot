@@ -1,5 +1,5 @@
 # PGCDiscordBot
-This is a first dive into writing a Discord Bot. The motivation for this Bot was to provide the necessary URL links relevant to League of Legends champions, their moveset, and recommended build for ARAM. 
+This is a first dive into writing a Discord Bot. The motivation for this Bot was to provide the necessary URL links relevant to League of Legends champions, their moveset, and recommended build for ARAM. However, additional functionality will be added to this bot as desirable features are brought forward. 
 
 ## How to Use
 The following commands are supported by the PGC Discord Bot
