@@ -31,7 +31,7 @@ async def on_message(message):
         return
 
     # We're only interested in processing commands on a specific channel
-    if message.channel.id == CHANNEL:
+    if message.channel.id in CHANNEL:
         # Process the `lol!` command
         if '!lol' in message.content:
             # If there is any issue, msg2 will be blank
