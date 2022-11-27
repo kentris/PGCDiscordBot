@@ -4,6 +4,7 @@ import os
 import pickle
 from textdistance import jaro_winkler
 import time
+import dice
 import lol
 import joke
 
@@ -45,6 +46,12 @@ async def on_message(message):
             if msg2:
                 time.sleep(2)
                 await message.channel.send(msg2)
+        elif '!roll' in message.content:
+            rolls = dice.process(message)
+            for roll in rolls:
+                total = sum(roll)
+                await message.channel.send(roll)
+                await message.channel.send(total)
 
 
 client.run(TOKEN)
