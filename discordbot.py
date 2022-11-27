@@ -47,7 +47,7 @@ async def on_message(message):
                 time.sleep(2)
                 await message.channel.send(msg2)
         elif '!roll' in message.content:
-            rolls = dice.process(message)
+            rolls = dice.process(message.content)
             for roll in rolls:
                 total = sum(roll)
                 await message.channel.send(roll)
