@@ -35,7 +35,7 @@ def process_dice_rolls(message):
     :return:
     """
     # Only want strings that fit the pattern 2d5
-    die_pattern = "^\d+[dD]\d+$"
+    die_pattern = "^\d+[dD]-?\d+$"
     rolls = message.split(" ")
     filtered_rolls = []
     for roll in rolls:
@@ -59,6 +59,9 @@ def roll_dice(number_of_dice, number_of_sides):
     """
     roll = []
     for i in range(number_of_dice):
-        result = random.randint(1, number_of_sides)
+        if number_of_sides < 1:
+            result = random.randint(number_of_sides, 0)
+        else:
+            result = random.randint(1, number_of_sides)
         roll.append(result)
     return roll
