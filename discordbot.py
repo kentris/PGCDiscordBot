@@ -115,12 +115,9 @@ async def blackjackgame(message):
                 game.is_player_turn = False
 
         # Keep hitting dealer until ending is achieved
-        # while not game.is_game_over():
-        for i in range(10):
+        while not game.is_game_over():
             await message.send(str(game))
             game.hit(game.dealer)
-            if game.is_game_over():
-                break
 
         # Announce the results
         await message.send(str(game))
@@ -128,9 +125,9 @@ async def blackjackgame(message):
             await message.send("You bust, sorry!")
         elif game.dealer.is_bust():
             await message.send("Dealer busts, you win!")
-        elif game.player.total > game.dealer:
+        elif game.player.total > game.dealer.total:
             await message.send("You win!")
-        elif game.player.total < game.dealer:
+        elif game.player.total < game.dealer.total:
             await message.send("You lose, sorry!")
         else:
             await message.send("Push!")

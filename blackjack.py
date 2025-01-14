@@ -10,19 +10,19 @@ class Card:
             '2': 2,
             '3': 3,
             '4': 4,
-            '5': 4,
-            '6': 4,
-            '7': 4,
-            '8': 4,
-            '9': 4,
-            '10': 4,
+            '5': 5,
+            '6': 6,
+            '7': 7,
+            '8': 8,
+            '9': 9,
+            '10': 10,
             'J': 10,
             'Q': 10,
             'K': 10
         }
 
     def __str__(self):
-        return self.rank + self.suite
+        return f"{self.rank}-{self.suite}"
 
     def get_value(self):
         return self.values[self.rank]
@@ -30,8 +30,9 @@ class Card:
 
 class Deck:
     def __init__(self):
-        self.suit = ["H", "C", "S", "D"]
+        self.suit = ["Hearts", "Clubs", "Spades", "Diamonds"]
         self.rank = [str(i) for i in range(2, 11)] + ["J", "Q", "K", "A"]
+        # self.rank = ["A"]
         self.deck = [Card(r, s) for r in self.rank for s in self.suit]
         random.shuffle(self.deck)
 
@@ -55,6 +56,7 @@ class Player:
 
     def take_card(self, card):
         self.cards.append(card)
+        self.total = sum([c.get_value() for c in self.cards])
         ace_count = sum([1 for card in self.cards if card.rank == "A"])
         # Do check for an Ace
         while self.total > 21 and ace_count:
@@ -75,9 +77,9 @@ class Blackjack:
     def __str__(self):
         return '\n'.join([
             f"Dealer: {', '.join([str(c) for c in self.dealer.cards])}",
-            f"Dealer Total: {sum([c.get_value() for c in self.dealer.cards])}\n",
+            f"Dealer Total: {self.dealer.total}\n",
             f"Player: {', '.join([str(c) for c in self.player.cards])}",
-            f"Player Total: {sum([c.get_value() for c in self.player.cards])}\n"
+            f"Player Total: {self.player.total}\n"
         ])
 
     def start_game(self):
