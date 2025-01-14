@@ -76,7 +76,7 @@ class Blackjack:
 
     def __str__(self):
         return '\n'.join([
-            f"Dealer: Total={self.dealer.total} ,({', '.join([str(c) for c in self.dealer.cards])})",
+            f"Dealer: Total={self.dealer.total}, ({', '.join([str(c) for c in self.dealer.cards])})",
             f"Player: Total={self.player.total}, ({', '.join([str(c) for c in self.player.cards])})\n"
         ])
 
