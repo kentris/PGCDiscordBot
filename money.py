@@ -53,4 +53,4 @@ def win_money(user, amount):
 
 def get_balance(user):
     funds = read_money()
-    return funds.get(str(user), 0)
+    return funds.get(user, 0)

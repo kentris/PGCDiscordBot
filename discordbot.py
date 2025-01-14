@@ -33,7 +33,7 @@ async def helpme(message):
 
 @bot.command(name='beg')
 async def beg(message):
-    amount = money.beg(message.author.id)
+    amount = money.beg(str(message.author.id))
     if amount == 0:
         await message.channel.send('"OUT OF MY WAY, PEASANT!"')
         await message.channel.send(f"You've earned no chips...")
@@ -53,7 +53,7 @@ async def beg(message):
 
 @bot.command(name='balance')
 async def get_balance(message):
-    funds = money.get_balance(message.author.id)
+    funds = money.get_balance(str(message.author.id))
     await message.channel.send(f"You have {funds} chips available")
 
 
@@ -82,11 +82,12 @@ async def roll_dice(message):
 
 @bot.command(name='blackjack')
 async def blackjackgame(message):
+    author_id = str(message.author.id)
     def check(msg):
         return msg.author == message.author and msg.content.lower() in ['hit', 'stand', 'doubledown']
 
     def check_money(msg):
-        funds = money.get_balance(msg.author.id)
+        funds = money.get_balance(str(msg.author.id))
         return msg.author == message.author and msg.content.isdigit() and 0 <= int(msg.content) <= funds
 
     # We're only interested in processing commands on a specific channel
@@ -136,21 +137,22 @@ async def blackjackgame(message):
         # Announce the results
         await message.send(str(game))
         if game.player.is_bust():
-            money.lose_money(message.author.id, bet)
+            money.lose_money(author_id, bet)
             await message.send("You bust, sorry!")
         elif game.dealer.is_bust():
-            money.win_money(message.author.id, bet)
+            money.win_money(author_id, bet)
             await message.send("Dealer busts, you win!")
         elif game.player.total > game.dealer.total:
-            money.win_money(message.author.id, bet)
+            money.win_money(author_id, bet)
             await message.send("You win!")
         elif game.player.total < game.dealer.total:
-            money.lose_money(message.author.id, bet)
+            money.lose_money(author_id, bet)
             await message.send("You lose, sorry!")
         else:
             await message.send("Push!")
 
-        get_balance(message)
+        balance = get_balance(author_id)
+        await message.channel.send(f"You have {balance} chips available")
 
 
 bot.run(TOKEN)
