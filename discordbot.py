@@ -60,7 +60,7 @@ async def on_ready():
 
 
 @bot.command(name='joke')
-async def joke(message):
+async def tell_joke(message):
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
         msg1, msg2 = joke.process(message)
@@ -72,7 +72,7 @@ async def joke(message):
 
 
 @bot.command(name='roll')
-async def roll(message):
+async def roll_dice(message):
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
         rolls = dice.process(message.content)
