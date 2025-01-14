@@ -96,7 +96,7 @@ async def blackjackgame(message):
 
         while game.is_player_turn:
             # Print the game state, take player input
-            print(str(game))
+            await message.send(str(game))
             await message.send("Do you want to `hit` or `stand`?")
             try:
                 msg = await bot.wait_for('message', check=check, timeout=60)
@@ -115,12 +115,15 @@ async def blackjackgame(message):
                 game.is_player_turn = False
 
         # Keep hitting dealer until ending is achieved
-        while not game.is_game_over():
-            print(str(game))
+        # while not game.is_game_over():
+        for i in range(10):
+            await message.send(str(game))
             game.hit(game.dealer)
+            if game.is_game_over():
+                break
 
         # Announce the results
-        print(game)
+        await message.send(str(game))
         if game.player.is_bust():
             await message.send("You bust, sorry!")
         elif game.dealer.is_bust():
