@@ -96,6 +96,10 @@ async def blackjackgame(message):
         funds = money.get_balance(str(msg.author.id))
         return 2*bet <= funds and num_cards == 2
 
+    def can_split(message, bet, game):
+        # TODO: Need to handle multiple hands
+        return False
+
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
         # Start new game of blackjack
@@ -114,7 +118,14 @@ async def blackjackgame(message):
         while game.is_player_turn:
             # Print the game state, take player input
             await message.send(str(game))
-            await message.send("Do you want to `hit`, `doubledown`, or `stand`?")
+            if can_double_down(message, bet, game) and can_split(message, bet, game):
+                await message.send("Do you want to `hit`, `doubledown`, `split`, or `stand`?")
+            elif can_double_down(message, bet, game):
+                await message.send("Do you want to `hit`, `doubledown`, or `stand`?")
+            elif can_split(message, bet, game):
+                await message.send("Do you want to `hit`, `split`, or `stand`?")
+            else:
+                await message.send("Do you want to `hit` or `stand`?")
             try:
                 msg = await bot.wait_for('message', check=check, timeout=60)
             except:
