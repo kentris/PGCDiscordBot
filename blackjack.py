@@ -73,9 +73,9 @@ class Blackjack:
         self.is_player_turn = True
 
     def __str__(self):
-        print(f"Dealer: {', '.join([c for c in self.dealer.cards])}")
+        print(f"Dealer: {', '.join([str(c) for c in self.dealer.cards])}")
         print(f"Dealer Total: {sum([c.get_value() for c in self.dealer.cards])}\n")
-        print(f"Player: {', '.join([c for c in self.player.cards])}")
+        print(f"Player: {', '.join([str(c) for c in self.player.cards])}")
         print(f"Player Total: {sum([c.get_value() for c in self.player.cards])}\n")
 
     def start_game(self):
