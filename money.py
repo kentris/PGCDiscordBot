@@ -41,4 +41,4 @@ def beg(user):
 
 def get_balance(user):
     funds = read_money()
-    return funds.get(user, 0)
+    return funds.get(str(user), 0)

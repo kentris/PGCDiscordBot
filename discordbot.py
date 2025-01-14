@@ -33,6 +33,7 @@ async def helpme(message):
 
 @bot.command(name='beg')
 async def beg(message):
+    print(message.author.id)
     amount = money.beg(message.author.id)
     if amount == 0:
         await message.channel.send('"OUT OF MY WAY, PEASANT!"')
@@ -53,6 +54,7 @@ async def beg(message):
 
 @bot.command(name='balance')
 async def get_balance(message):
+    print(message.author.id)
     funds = money.get_balance(message.author.id)
     await message.channel.send(f"You have {funds} chips available")
 
