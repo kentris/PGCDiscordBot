@@ -49,6 +49,7 @@ async def beg(message):
     else:
         await message.channel.send(f"*presses a large coin into your palm*")
         await message.channel.send(f"You've earned a whole {amount} chips!")
+    await get_balance(message)
 
 
 @bot.command(name='balance')
