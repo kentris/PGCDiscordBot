@@ -91,9 +91,10 @@ async def blackjackgame(message):
         funds = money.get_balance(str(msg.author.id))
         return msg.author == message.author and msg.content.isdigit() and 0 <= int(msg.content) <= funds
 
-    def can_double_down(msg, bet):
+    def can_double_down(msg, bet, game):
+        num_cards = len(game.player.cards)
         funds = money.get_balance(str(msg.author.id))
-        return 2*bet <= funds
+        return 2*bet <= funds and num_cards == 2
 
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
@@ -129,13 +130,16 @@ async def blackjackgame(message):
             elif msg.content.lower() == "stand":
                 game.is_player_turn = False
             # Player doubles down
-            elif msg.content.lower() == "doubledown" and can_double_down(message, bet):
+            elif msg.content.lower() == "doubledown" and can_double_down(message, bet, game):
                 bet *= 2
                 game.hit(game.player)
                 game.is_player_turn = False
             # Player tries to doubledown but can't afford it
-            elif msg.content.lower() == "doubledown" and not can_double_down(message, bet):
-                await message.send("You're wasting everybody's time. You don't have the coin!")
+            elif msg.content.lower() == "doubledown" and not can_double_down(message, bet, game):
+                if len(game.player.cards) > 2:
+                    await message.send("You're wasting everybody's time. You already took a card!")
+                else:
+                    await message.send("You're wasting everybody's time. You don't have the coin!")
             # Player inputs something we can't handle
             else:
                 await message.send("You're wasting everybody's time.")
