@@ -11,6 +11,7 @@ def read_money():
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
+        print(f"Read from {file_path}")
         return data
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' does not exist.")
