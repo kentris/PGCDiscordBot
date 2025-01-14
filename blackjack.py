@@ -76,10 +76,8 @@ class Blackjack:
 
     def __str__(self):
         return '\n'.join([
-            f"Dealer: {', '.join([str(c) for c in self.dealer.cards])}",
-            f"Dealer Total: {self.dealer.total}\n",
-            f"Player: {', '.join([str(c) for c in self.player.cards])}",
-            f"Player Total: {self.player.total}\n"
+            f"Dealer: Total={self.dealer.total} ,({', '.join([str(c) for c in self.dealer.cards])})",
+            f"Player: Total={self.player.total}, ({', '.join([str(c) for c in self.player.cards])})\n"
         ])
 
     def start_game(self):

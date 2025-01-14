@@ -85,7 +85,7 @@ async def roll_dice(message):
 @bot.command(name='blackjack')
 async def blackjackgame(message):
     def check(msg):
-        return msg.author == message.author and msg.content.lower() in ['hit', 'stand']
+        return msg.author == message.author and msg.content.lower() in ['hit', 'stand', 'doubledown']
 
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
@@ -97,7 +97,7 @@ async def blackjackgame(message):
         while game.is_player_turn:
             # Print the game state, take player input
             await message.send(str(game))
-            await message.send("Do you want to `hit` or `stand`?")
+            await message.send("Do you want to `hit`, `doubledown`, or `stand`?")
             try:
                 msg = await bot.wait_for('message', check=check, timeout=60)
             except:
@@ -112,6 +112,10 @@ async def blackjackgame(message):
 
             # Player passes
             elif msg.content.lower() == "stand":
+                game.is_player_turn = False
+
+            elif msg.content.lower() == "doubledown":
+                game.hit(game.player)
                 game.is_player_turn = False
 
         # Keep hitting dealer until ending is achieved
