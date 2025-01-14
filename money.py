@@ -39,6 +39,18 @@ def beg(user):
     write_money(funds)
     return amount
 
+def lose_money(user, amount):
+    funds = read_money()
+    funds[user] -= amount
+    write_money(funds)
+    return funds[user]
+
+def win_money(user, amount):
+    funds = read_money()
+    funds[user] += amount
+    write_money(funds)
+    return funds[user]
+
 def get_balance(user):
     funds = read_money()
     return funds.get(str(user), 0)

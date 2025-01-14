@@ -33,7 +33,6 @@ async def helpme(message):
 
 @bot.command(name='beg')
 async def beg(message):
-    print(message.author.id)
     amount = money.beg(message.author.id)
     if amount == 0:
         await message.channel.send('"OUT OF MY WAY, PEASANT!"')
@@ -54,7 +53,6 @@ async def beg(message):
 
 @bot.command(name='balance')
 async def get_balance(message):
-    print(message.author.id)
     funds = money.get_balance(message.author.id)
     await message.channel.send(f"You have {funds} chips available")
 
@@ -87,12 +85,24 @@ async def blackjackgame(message):
     def check(msg):
         return msg.author == message.author and msg.content.lower() in ['hit', 'stand', 'doubledown']
 
+    def check_money(msg):
+        funds = money.get_balance(msg.author.id)
+        return msg.author == message.author and msg.content.isdigit() and 0 <= int(msg.content) <= funds
+
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
         # Start new game of blackjack
         game = blackjack.Blackjack()
         game.start_game()
         await message.send(f"Welcome to Blackjack!")
+        await message.send("How much would you like to wager?")
+        try:
+            msg = await bot.wait_for('message', check=check_money, timeout=60)
+        except:
+            await message.send("Time is money pal, game over!")
+            return
+
+        bet = int(msg.content)
 
         while game.is_player_turn:
             # Print the game state, take player input
@@ -126,15 +136,21 @@ async def blackjackgame(message):
         # Announce the results
         await message.send(str(game))
         if game.player.is_bust():
+            money.lose_money(message.author.id, bet)
             await message.send("You bust, sorry!")
         elif game.dealer.is_bust():
+            money.win_money(message.author.id, bet)
             await message.send("Dealer busts, you win!")
         elif game.player.total > game.dealer.total:
+            money.win_money(message.author.id, bet)
             await message.send("You win!")
         elif game.player.total < game.dealer.total:
+            money.lose_money(message.author.id, bet)
             await message.send("You lose, sorry!")
         else:
             await message.send("Push!")
+
+        get_balance(message)
 
 
 bot.run(TOKEN)
