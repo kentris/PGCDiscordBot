@@ -26,8 +26,8 @@ async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
 
-@bot.command(name='help')
-async def help(message):
+@bot.command(name='helpme')
+async def helpme(message):
     available_commands = ["help", "joke", "roll"]
 
 
