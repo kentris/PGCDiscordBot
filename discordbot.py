@@ -151,7 +151,7 @@ async def blackjackgame(message):
         else:
             await message.send("Push!")
 
-        get_balance(message)
+        await get_balance(message)
 
 
 bot.run(TOKEN)
