@@ -19,7 +19,7 @@ def read_money():
         print(f"Error: The file '{file_path}' is not a valid JSON file.")
         return None
 
-def write_json(data):
+def write_money(data):
     """Writes data to a JSON file."""
     try:
         with open(file_path, 'w') as file:
@@ -33,6 +33,9 @@ def beg(user):
     funds = read_money()
     if user not in funds:
         funds[user] = amount
+    else:
+        funds[user] += amount
+    write_money(funds)
     return amount
 
 def get_balance(user):
