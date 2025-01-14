@@ -151,8 +151,7 @@ async def blackjackgame(message):
         else:
             await message.send("Push!")
 
-        balance = get_balance(author_id)
-        await message.channel.send(f"You have {balance} chips available")
+        get_balance(message)
 
 
 bot.run(TOKEN)
