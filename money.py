@@ -11,7 +11,7 @@ def read_money():
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-        print(f"Read from {file_path}")
+        # print(f"Read from {file_path}")
         return data
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' does not exist.")
@@ -25,7 +25,7 @@ def write_money(data):
     try:
         with open(file_path, 'w') as file:
             json.dump(data, file, indent=4)
-        print(f"Data successfully written to '{file_path}'")
+        # print(f"Data successfully written to '{file_path}'")
     except Exception as e:
         print(f"Error writing to file '{file_path}': {e}")
 
