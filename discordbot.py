@@ -87,10 +87,8 @@ async def blackjackgame(message):
     def check(msg):
         return msg.author == message.author and msg.content.lower() in ['hit', 'stand', 'doubledown']
 
-    async def check_money(msg):
+    def check_money(msg):
         funds = money.get_balance(str(msg.author.id))
-        if msg.author == message.author and msg.content.isdigit() and int(msg.content) > funds:
-            message.send("That bet is too rich for your blood.")
         return msg.author == message.author and msg.content.isdigit() and 0 <= int(msg.content) <= funds
 
     def can_double_down(msg, bet, game):
