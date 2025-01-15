@@ -158,13 +158,13 @@ async def blackjackgame(message):
                 await message.send("You're wasting everybody's time.")
 
         await message.send(str(game))
-        await message.send("")
+        await message.send("----------------")
         # Keep hitting dealer until ending is achieved
         while not game.is_game_over():
             await message.send("Dealer takes a card:")
             game.hit(game.dealer)
             await message.send(str(game))
-            await message.send("")
+            await message.send("----------------")
 
 
         # Announce the results
