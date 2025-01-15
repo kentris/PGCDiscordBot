@@ -105,8 +105,10 @@ async def blackjackgame(message):
         # Start new game of blackjack
         game = blackjack.Blackjack()
         game.start_game()
+
+        funds = money.get_balance(str(message.author.id))
         await message.send(f"Welcome to Blackjack!")
-        await message.send("How much would you like to wager?")
+        await message.send(f"You have {funds} chips available. How much would you like to wager?")
         try:
             msg = await bot.wait_for('message', check=check_money, timeout=60)
         except:
