@@ -18,6 +18,7 @@ CHANNEL = data['CHANNEL_ID']
 
 # Create the bot and set up the command prefix
 intents = discord.Intents.default()
+intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 
@@ -30,7 +31,9 @@ async def on_ready():
 @bot.command(name='huh')
 async def huh_info(message):
     if message.channel.id in CHANNEL:
-        info = huh.process_huh_message(message.content)
+        print(message.message.content)
+        info = huh.process(message.message.content)
+        print(info)
         for i in info:
             await message.channel.send(i)
 
@@ -80,7 +83,7 @@ async def tell_joke(message):
 async def roll_dice(message):
     # We're only interested in processing commands on a specific channel
     if message.channel.id in CHANNEL:
-        rolls = dice.process(message.content)
+        rolls = dice.process(message.message.content)
         for roll in rolls:
             total = sum(roll)
             await message.channel.send(roll)

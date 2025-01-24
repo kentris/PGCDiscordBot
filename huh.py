@@ -2,6 +2,7 @@ import re
 
 def process(message):
     message = process_huh_message(message)
+    print(f"Processed message: {message}")
     if len(message) == 0:
         info = huh_info()
     elif message == 'beg':
@@ -80,7 +81,7 @@ def roll_info():
     msg = [
         '`!roll` allows the user to simulate a dice roll of many combinations.',
         'This command requires the user to specify the number of dice and how many sides a die has.',
-        'The format to specify the number of dice and how many sides a dice has is *<number_of_dice>d<number_of_sides>*.'
+        'The format to specify the number of dice and how many sides a dice has is *<number_of_dice>d<number_of_sides>*.',
         'For example, to roll 2 6-sided dice, the user would type in `!roll 2d6`.'
     ]
     return msg
