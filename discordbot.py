@@ -6,6 +6,7 @@ import dice
 import joke
 import blackjack
 import money
+import huh
 
 
 # Open Discord password file and relevant channel information
@@ -26,9 +27,11 @@ async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
 
-@bot.command(name='helpme')
-async def helpme(message):
-    available_commands = ["help", "joke", "roll"]
+@bot.command(name='huh')
+async def huh(message):
+    info = huh.process_huh_message(message)
+    for i in info:
+        await message.channel.send(i)
 
 
 @bot.command(name='beg')
