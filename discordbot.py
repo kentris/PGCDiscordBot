@@ -18,7 +18,7 @@ CHANNEL = data['CHANNEL_ID']
 
 # Create the bot and set up the command prefix
 intents = discord.Intents.default()
-intents.message_content = True
+intents.messages = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 
