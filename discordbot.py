@@ -28,7 +28,7 @@ async def on_ready():
 
 
 @bot.command(name='huh')
-async def huh(message):
+async def huh_info(message):
     info = huh.process_huh_message(message)
     for i in info:
         await message.channel.send(i)
