@@ -18,6 +18,7 @@ CHANNEL = data['CHANNEL_ID']
 
 # Create the bot and set up the command prefix
 intents = discord.Intents.default()
+intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 
@@ -29,36 +30,39 @@ async def on_ready():
 
 @bot.command(name='huh')
 async def huh_info(message):
-    info = huh.process_huh_message(message.content)
-    for i in info:
-        await message.channel.send(i)
+    if message.channel.id in CHANNEL:
+        info = huh.process_huh_message(message.content)
+        for i in info:
+            await message.channel.send(i)
 
 
 @bot.command(name='beg')
 async def beg(message):
-    amount = money.beg(str(message.author.id))
-    if amount == 0:
-        await message.channel.send('"OUT OF MY WAY, PEASANT!"')
-        await message.channel.send(f"You've earned no chips...")
-    elif amount < 4:
-        await message.channel.send('*throws a smattering of coins at you*')
-        await message.channel.send(f"You've earned {amount} chips.")
-    elif amount < 7:
-        await message.channel.send(f'"Keep a stiff upper lip, eh?"')
-        await message.channel.send(f"You've earned {amount} chips.")
-    elif amount < 10:
-        await message.channel.send(f'"Of course, of course, here you are, sir."')
-        await message.channel.send(f"You've earned {amount} chips!")
-    else:
-        await message.channel.send(f"*presses a large coin into your palm*")
-        await message.channel.send(f"You've earned a whole {amount} chips!")
-    await get_balance(message)
+    if message.channel.id in CHANNEL:
+        amount = money.beg(str(message.author.id))
+        if amount == 0:
+            await message.channel.send('"OUT OF MY WAY, PEASANT!"')
+            await message.channel.send(f"You've earned no chips...")
+        elif amount < 4:
+            await message.channel.send('*throws a smattering of coins at you*')
+            await message.channel.send(f"You've earned {amount} chips.")
+        elif amount < 7:
+            await message.channel.send(f'"Keep a stiff upper lip, eh?"')
+            await message.channel.send(f"You've earned {amount} chips.")
+        elif amount < 10:
+            await message.channel.send(f'"Of course, of course, here you are, sir."')
+            await message.channel.send(f"You've earned {amount} chips!")
+        else:
+            await message.channel.send(f"*presses a large coin into your palm*")
+            await message.channel.send(f"You've earned a whole {amount} chips!")
+        await get_balance(message)
 
 
 @bot.command(name='balance')
 async def get_balance(message):
-    funds = money.get_balance(str(message.author.id))
-    await message.channel.send(f"You have {funds} chips available")
+    if message.channel.id in CHANNEL:
+        funds = money.get_balance(str(message.author.id))
+        await message.channel.send(f"You have {funds} chips available")
 
 
 @bot.command(name='joke')
